@@ -25,12 +25,14 @@ object Jetty extends App {
 
   def configureStaticContent(context: WebAppContext): WebAppContext = {
     def pathCheck(path: String) =
-      Option(new File(path)).filter(_.exists()).filter(_.isDirectory()).isDefined
+      Option(new File(path)).filter(_.exists()).exists(_.isDirectory())
 
-    val webappDir = if (pathCheck("src/main/webapp")) {
+    val webappDir = if (pathCheck("target/webapp")) {
+      "target/webapp"
+    } else if (pathCheck("src/main/webapp")) {
       "src/main/webapp"
     } else {
-      (tryo(context.getClass.getClassLoader.getResource("webapp")).flatMap(Option(_)).map(_.toExternalForm) ?~ "Webapp not found") match {
+      tryo(context.getClass.getClassLoader.getResource("webapp")).flatMap(Option(_)).map(_.toExternalForm) ?~ "Webapp not found" match {
         case Full(x) => x
         case Empty =>
           System.exit(-1)
@@ -46,7 +48,7 @@ object Jetty extends App {
   }
 
   def configureXssHeaders(context: WebAppContext): Handler = {
-    def se[U,T](block: (U,T) => Unit)(accum: U, arg: T) = { block(accum,arg); accum }
+    def run[U,T](block: (U,T) => Unit)(accum: U, arg: T) = { block(accum,arg); accum }
     def toHeader: ((String,String)) => Rule = {
       case (name,value) =>
         val headerRule = new HeaderPatternRule
@@ -63,9 +65,9 @@ object Jetty extends App {
       "X-Content-Type-Options" -> "nosniff" ::
       Nil
 
-    val rewriteHandler = headers.map(toHeader).foldLeft(new RewriteHandler)(se(_.addRule(_)))
+    val rewriteHandler = headers.map(toHeader).foldLeft(new RewriteHandler)(run(_.addRule(_)))
     val handlerCollection =
-      (rewriteHandler :: context :: Nil).foldLeft(new HandlerCollection())(se(_.addHandler(_)))
+      (rewriteHandler :: context :: Nil).foldLeft(new HandlerCollection())(run(_.addHandler(_)))
 
     handlerCollection
   }
@@ -80,6 +82,9 @@ object Jetty extends App {
     val context = (configureCookies _ andThen configureStaticContent andThen configureXssHeaders)(configureContext)
     server.setHandler(context)
     server.start()
+    sys.addShutdownHook {
+      server.stop()
+    }
   }
 
   startServer()

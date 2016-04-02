@@ -1,0 +1,8 @@
+{
+  "generator-reveal": {
+    "presentationTitle": "Akka Streams - Why should you care?",
+    "packageVersion": "0.0.1",
+    "useSass": true,
+    "deployToGithubPages": false
+  }
+}

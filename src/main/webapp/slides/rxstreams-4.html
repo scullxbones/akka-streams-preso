@@ -1,0 +1,53 @@
+<h1>Reactive streams</h1>
+
+<ul>
+    <li>SPI, not intended to be user-facing</li>
+    <li>Provides interop among implementations</li>
+</ul>
+
+<pre>
+<code class="scala">
+trait Publisher[T] {
+    def subscribe(subscriber: Subscriber[T]): Unit
+}
+
+trait Subscriber[T] {
+    def onSubscribe(sub: Subscription): Unit
+    def onNext(t: T): Unit
+    def onError(t: Throwable): Unit
+    def onComplete()
+}
+
+trait Subscription {
+    def request(n: Long): Unit
+    def cancel(): Unit
+}
+</code>
+</pre>
+
+<ul class="col">
+  <h5>Connect flow</h5>
+  <li>Sub => Pub <code>subscribe</code></li>
+  <li>Pub => Sub <code>onSubscribe</code>
+      <ul><li>Acknowledgement</li></ul>
+  </li>
+</ul>
+
+<ul class="col">
+  <h5>Data flow</h5>
+  <li>Sub => (via Subscription) => Pub <code>request</code>
+    <ul><li>Upstream demand signaling</li></ul>
+  </li>
+  <li>Pub => Sub `onNext`
+    <ul><li>Downstream data flow</li></ul>
+  </li>
+</ul>
+
+<ul class="col">
+    <h5>Completion</h5>
+  <li>Pub => Sub <code>onComplete</code></li>
+  <li>Pub => Sub <code>onError</code></li>
+  <li>Sub => (via Subscription) => Pub <code>cancel</code></li>
+</ul>
+
+<div class="clear"></div>

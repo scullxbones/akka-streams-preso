@@ -1,6 +1,8 @@
 package bootstrap.liftweb
 
+import net.liftweb.common.Full
 import net.liftweb.http._
+import net.liftweb.sitemap.Loc.EarlyResponse
 import net.liftweb.sitemap._
 
 object SnippetSetup {
@@ -18,13 +20,18 @@ object SnippetSetup {
 
   def siteMap(): SiteMap = {
     SiteMap(
-      Menu.i("Home") / "index"
+        Menu.i("Home") / "index" >> EarlyResponse(() => Full(RedirectResponse("/deck"))),
+        Menu.i("Deck") / "deck",
+        Menu.i("Slides") / "slides" / **,
+        Menu.i("Samples") / "samples" / **
     )
   }
 
   private def setupSiteMap(): Unit = {
     LiftRules.liftRequest.append {
       case Req("sitemap" :: Nil, "xml", _) => false
+      case Req("slides" :: _, _, _) => false
+
     }
 
     LiftRules.setSiteMapFunc(siteMap _)
@@ -36,6 +43,7 @@ object SnippetSetup {
       case StatelessReqTest("favicon.ico" :: _, _)  => true
       case StatelessReqTest("classpath" :: _, _)    => true
       case StatelessReqTest("stylesheets" :: _, _)  => true
+      case StatelessReqTest("slides" :: _, _)  => true
     }
 
     // Don't include AJAX on stateless pages so that we can avoid triggering

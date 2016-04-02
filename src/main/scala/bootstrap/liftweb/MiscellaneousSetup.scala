@@ -2,7 +2,7 @@ package bootstrap.liftweb
 
 import net.liftweb.common._
 import net.liftweb.http._
-import js.{JsCmd, JE}
+import net.liftweb.http.js.{JE, JsCmd}
 import net.liftweb.util.Helpers._
 
 import scala.collection.immutable.Set
