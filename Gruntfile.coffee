@@ -171,11 +171,16 @@ module.exports = (grunt) ->
             'copy'
         ]
 
+    grunt.registerTask 'sbt',
+        'Save presentation files to *dist* directory.', [
+            'lint'
+            'sass'
+            'buildIndex'
+            'copy:webapp'
+        ]
+
     # Define default task.
     grunt.registerTask 'default', [
-        'lint'
-        'sass'
-        'buildIndex'
-        'copy:webapp'
+        'sbt'
         'watch'
     ]

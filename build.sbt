@@ -9,12 +9,17 @@ lazy val grunt = taskKey[Unit]("Runs grunt")
 grunt := {
     val logger = streams.value.log
     logger.info("Executing task grunt")
-    "grunt" ! logger
+    "npm install" ! logger
+    "./node_modules/grunt-cli/bin/grunt sbt" ! logger
 }
+
+unmanagedSources <<= (unmanagedSources in Compile) dependsOn grunt
 
 compile <<= (compile in Compile) dependsOn grunt
 
-watchSources <++= baseDirectory map { path => ((path / "src/main/webapp") ** "*.*").get }
+unmanagedResourceDirectories in Compile += baseDirectory.value / "src/main/webapp"
+
+// watchSources <++= baseDirectory map { path => ((path / "src/main/webapp") ** "*.*").get }
 
 // Ref: https://tpolecat.github.io/2014/04/11/scalac-flags.html
 scalacOptions ++= Seq(
