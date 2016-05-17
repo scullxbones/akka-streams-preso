@@ -20,28 +20,33 @@ $heading5Size: 1.1em;
   .slides p {
       text-shadow: 2px 2px #fff;
     }
-
+  pre {
+    -webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+  }
 
   .slides {
     background: rgba(192,192,192,0.7);
     border-width: 1px;
     border-color: black;
 
-    ul {
-        .col {
-            width: 60px;
-            float: left;
-            margin: 0 5px 0 0;
-            padding: 0;
-
-            li {
-                width: 50px;
-                background: #999;
-                list-style-type: none;
-                margin: 0 0 5px 0;
-                padding: 5px;
-            }
-         }
+    .row {
+      padding: 10px;
+      ul {
+        &.col {
+          vertical-align: top;
+          width: 30%;
+          display: inline-block;
+          margin: 0 5px 5px 0;
+          padding: 0;
+          li {
+            list-style-type: none;
+            margin: 0 0 5px 0;
+            padding: 5px;
+          }
+        }
+      }
     }
 
     .clear {

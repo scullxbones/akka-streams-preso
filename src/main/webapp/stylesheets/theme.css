@@ -7,21 +7,27 @@
 .reveal .slides p {
   text-shadow: 2px 2px #fff; }
 
+.reveal pre {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none; }
+
 .reveal .slides {
   background: rgba(192, 192, 192, 0.7);
   border-width: 1px;
   border-color: black; }
-  .reveal .slides ul .col {
-    width: 60px;
-    float: left;
-    margin: 0 5px 0 0;
-    padding: 0; }
-    .reveal .slides ul .col li {
-      width: 50px;
-      background: #999;
-      list-style-type: none;
-      margin: 0 0 5px 0;
-      padding: 5px; }
+  .reveal .slides .row {
+    padding: 10px; }
+    .reveal .slides .row ul.col {
+      vertical-align: top;
+      width: 30%;
+      display: inline-block;
+      margin: 0 5px 5px 0;
+      padding: 0; }
+      .reveal .slides .row ul.col li {
+        list-style-type: none;
+        margin: 0 0 5px 0;
+        padding: 5px; }
   .reveal .slides .clear {
     clear: both; }
 

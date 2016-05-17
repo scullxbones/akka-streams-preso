@@ -24,30 +24,31 @@ trait Subscription {
 }
 </code>
 </pre>
+<div class="row">
+    <ul class="col">
+        <h5>Connect flow</h5>
+        <li>Sub => Pub <code>subscribe</code></li>
+        <li>Pub => Sub <code>onSubscribe</code>
+            <ul><li>Acknowledgement</li></ul>
+        </li>
+    </ul>
 
-<ul class="col">
-  <h5>Connect flow</h5>
-  <li>Sub => Pub <code>subscribe</code></li>
-  <li>Pub => Sub <code>onSubscribe</code>
-      <ul><li>Acknowledgement</li></ul>
-  </li>
-</ul>
+    <ul class="col">
+      <h5>Data flow</h5>
+      <li>Sub => Pub <code>request</code> (via Subscription)
+        <ul><li>Upstream demand signaling</li></ul>
+      </li>
+      <li>Pub => Sub `onNext`
+        <ul><li>Downstream data flow</li></ul>
+      </li>
+    </ul>
 
-<ul class="col">
-  <h5>Data flow</h5>
-  <li>Sub => (via Subscription) => Pub <code>request</code>
-    <ul><li>Upstream demand signaling</li></ul>
-  </li>
-  <li>Pub => Sub `onNext`
-    <ul><li>Downstream data flow</li></ul>
-  </li>
-</ul>
-
-<ul class="col">
-    <h5>Completion</h5>
-  <li>Pub => Sub <code>onComplete</code></li>
-  <li>Pub => Sub <code>onError</code></li>
-  <li>Sub => (via Subscription) => Pub <code>cancel</code></li>
-</ul>
+    <ul class="col">
+        <h5>Completion</h5>
+      <li>Pub => Sub <code>onComplete</code></li>
+      <li>Pub => Sub <code>onError</code></li>
+      <li>Sub => (via Subscription) => Pub <code>cancel</code></li>
+    </ul>
+</div>
 
 <div class="clear"></div>
