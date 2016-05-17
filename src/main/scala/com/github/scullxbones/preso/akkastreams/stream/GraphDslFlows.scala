@@ -5,7 +5,7 @@ import akka.stream.FlowShape
 import akka.stream.scaladsl._
 import com.github.scullxbones.preso.akkastreams.App
 
-object GraphDslFlows {
+object GraphDslFlows extends TickTock {
     import App._
 
     def sample(source: Source[String, NotUsed]): Flow[String, String, NotUsed] = {
@@ -27,7 +27,9 @@ object GraphDslFlows {
     def graph(contained: Seq[String], logToPage: String => Unit) = {
         val feed = "ABC" :: "abc" :: "de" :: Nil
 
-        Source(feed).via(sample(Source(contained))).runWith(Sink.foreach(logToPage))
+        tickTock(Source(feed))
+            .via(sample(tickTock(Source(contained))))
+            .runWith(Sink.foreach(logToPage))
     }
 
 }

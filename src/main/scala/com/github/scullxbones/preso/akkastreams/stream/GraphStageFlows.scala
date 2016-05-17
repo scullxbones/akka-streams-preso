@@ -11,7 +11,7 @@ import scala.util.hashing.MurmurHash3.{bytesHash, mix}
 
 import scala.collection.immutable.Seq
 
-object GraphStageFlows {
+object GraphStageFlows extends TickTock {
     import App._
 
     private def splitPairs(content: String): Seq[String] = {
@@ -24,7 +24,7 @@ object GraphStageFlows {
     }
 
     def graphStage(content: String, fn: ByteString => Unit) = {
-        Source(splitPairs(content))
+        tickTock(Source(splitPairs(content)))
             .via(Flow[String].map(ByteString.apply))
             .viaMat(Flow.fromGraph(new MurmurHasher()))(Keep.right)
             .toMat(Sink.foreach(fn))(Keep.left)

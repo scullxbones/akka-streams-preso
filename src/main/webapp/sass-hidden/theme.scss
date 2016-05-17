@@ -49,6 +49,37 @@ $heading5Size: 1.1em;
       }
     }
 
+    .left {
+      width: 400px;
+      float: left;
+      margin: 0 5px 0 10px;
+      padding: 0;
+    }
+
+    .right {
+      width: 1000px;
+      float: right;
+      margin: 0 10px 0 5px;
+      padding: 0;
+    }
+
+    ul {
+        .col {
+            width: 60px;
+            float: left;
+            margin: 0 5px 0 0;
+            padding: 0;
+
+            li {
+                width: 50px;
+                background: #999;
+                list-style-type: none;
+                margin: 0 0 5px 0;
+                padding: 5px;
+            }
+         }
+    }
+
     .clear {
       clear: both;
     }

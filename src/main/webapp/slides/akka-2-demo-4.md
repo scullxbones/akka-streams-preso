@@ -2,10 +2,20 @@
 
 ##### Map Async Supervision
 
-- Supervision can cope with failure
-- Simple case, `Supervision.resumingDecider` resumes the stream after the failure
-- Finer detail can be done with a custom `Supervision` approach
-- Completing the stream (rather than failing) can be done with `recover`
+<div class="left">
+![mapasyncflow](/resources/mapasyncflow.png)
+</div>
+
+<div class="right">
+<ul>
+<li>Supervision can cope with failure</li>
+<li>Simple case, `Supervision.resumingDecider` resumes the stream after the failure</li>
+<li>Finer detail can be done with a custom `Supervision` approach</li>
+<li>Completing the stream (rather than failing) can be done with `recover`</li>
+</ul>
+</div>
+
+<div class="clear"/>
 
 ```scala
 def asyncApi(str: String): Future[String] = Future {

@@ -2,6 +2,8 @@
 
 ##### Map Async Failure
 
+![mapasyncflow](/resources/mapasyncflow.png)
+
 - Map async failures cause the stream to abort with a failure
 
 ```scala

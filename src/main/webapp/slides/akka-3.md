@@ -7,6 +7,8 @@
 - Reach for this when you need fan-in and fan-out shapes
   - But first: check out `Source.combine` and `Sink.combine`
 
+<a href="/resources/graphdslflow.png" target="blank">diagram</a>
+
 ```scala
 def sample(source: Source[String, NotUsed]): Flow[String, String, NotUsed] = {
     Flow.fromGraph(GraphDSL.create(source) { implicit builder => src =>

@@ -2,6 +2,8 @@
 
 ##### Simple flow
 
+![basicflow](/resources/basicflow.png)
+
 - Simple source of `1 to N`, with a Sink logging each to console
 
 ```scala

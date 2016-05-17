@@ -2,10 +2,20 @@
 
 ##### Map Async Unordered
 
-- Simple source of strings
-- Run async api with parallelism of 2
-- Lower case letters run slower than upper
-- Unordered means that upper case letters can get far ahead
+<div class="left">
+![mapasyncflow](/resources/mapasyncflow.png)
+</div>
+
+<div class="right">
+<ul>
+<li>Simple source of strings</li>
+<li>Run async api with parallelism of 2</li>
+<li>Lower case letters run slower than upper</li>
+<li>Unordered means that upper case letters can get ahead</li>
+</ul>
+</div>
+
+<div class="clear"/>
 
 ```scala
 def asyncApi(str: String): Future[String] = Future {

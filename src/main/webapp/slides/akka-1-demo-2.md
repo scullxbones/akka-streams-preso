@@ -2,6 +2,8 @@
 
 ##### Map & Filter
 
+![mapfilterflow](/resources/mapfilterflow.png)
+
 - Simple source of `1 to N`
 - Filter evens only
 - Map to a number of `a`s
