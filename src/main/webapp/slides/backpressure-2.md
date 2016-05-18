@@ -2,5 +2,8 @@
 
 #### Why is it important?
 
-- Slow producer, fast consumer - not needed
-- Fast producer, slow consumer
+![Homer the consumer](/resources/homerconsumer.gif)
+
+- Not every producer/consumer pair can be as well matched
+- Slow producer, fast consumer - not really needed
+- Fast producer, slow consumer - backpressure really shines

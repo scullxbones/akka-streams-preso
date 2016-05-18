@@ -4,7 +4,7 @@
 
 - Push
   - Buffering
-  - Overflow behavior?
+  - Overflow behavior? Drop/Fail
 - Pull
   - Can be too slow
 - Dynamic push-pull

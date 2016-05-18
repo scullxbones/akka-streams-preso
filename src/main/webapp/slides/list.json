@@ -1,8 +1,8 @@
 ["index.md",
     "abstract.md",
     ["rxstreams.html", "rxstreams-1.md", "rxstreams-2.md", "rxstreams-3.md", "rxstreams-4.html"],
-    ["backpressure-1.md", "backpressure-2.md", "backpressure-3.md"],
+    ["backpressure-1.md", "backpressure-2.md", "backpressure-2-a.md", "backpressure-3.md"],
     ["akka-1.md", "akka-1-demo-1.md", "akka-1-demo-2.md"],
     ["akka-2.md", "akka-2-demo-1.md", "akka-2-demo-2.md", "akka-2-demo-3.md", "akka-2-demo-4.md"],
-    "akka-3.md", "akka-4.md", "akka-5.md", "more.md", "questions.md"
+    "akka-3.md", "akka-4.md", "akka-5.md", "akka6.md", "more.md", "questions.md"
 ]
