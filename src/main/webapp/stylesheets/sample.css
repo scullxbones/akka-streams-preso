@@ -9,6 +9,7 @@
   font-size: 1.5em;
   font-family: monospace; }
   #sample li {
+    color: #fff;
     list-style-type: none; }
     #sample li:before {
       content: "> "; }

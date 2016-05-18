@@ -23,10 +23,6 @@ class SampleComet extends CometActor with Loggable {
 
     private var results: Vector[Elem] = Vector.empty
 
-    override def localSetup = {
-        logger.info(s"Local setup!!!!")
-    }
-
     override def defaultPrefix = Full("sample")
 
     override def render =

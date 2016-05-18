@@ -39,17 +39,17 @@ trait TimeSeriesSource {
   }
 }
 
+case class S3BucketAndKey(bucket: String, key: String)
+sealed trait UploadReport
+case class UploadSuccess(segments: Int) extends UploadReport
+case class UploadFailure(exception: Throwable) extends UploadReport
+trait UploadCompleter { def completeUpload: Future[UploadReport] }
+
 trait ArchivalBranch {
 
   val dtFormat = DateTimeFormat.fullDateTime()
   def convertToCsvRow(tsData: TimeSeriesData): String =
       List(dtFormat.print(tsData.timestamp), tsData.deviceId.id.toString, tsData.deviceAttribute.name, f"${tsData.value.value}%1.3f", Nil) mkString ","
-
-  case class S3BucketAndKey(bucket: String, key: String)
-  sealed trait UploadReport
-  case class UploadSuccess(segments: Int) extends UploadReport
-  case class UploadFailure(exception: Throwable) extends UploadReport
-  trait UploadCompleter { def completeUpload: Future[UploadReport] }
 
   def s3sink(s3info: S3BucketAndKey): Sink[String, Future[UploadCompleter]] = {
     Sink.fold[Int, String](0){ case(accum,_) => accum + 1}.mapMaterializedValue{ lines =>
@@ -68,6 +68,7 @@ sealed trait Interval {
 object Interval {
     private class HourIntervalImpl(modulo: Int) extends Interval {
         override def newInterval(ts: DateTime) = ts.minuteOfHour().get() % modulo == 0
+        override def toString = s"Every $modulo minutes per hour"
     }
 
     val `15m`: Interval = new HourIntervalImpl(15)
@@ -100,12 +101,11 @@ trait AggregationBranch {
         .groupBy(MAXIMUM_GROUPS_INFLIGHT, tsd => (tsd.deviceId, tsd.deviceAttribute))
   }
 
-  def groupByInterval(interval: Interval): Sink[TimeSeriesData, NotUsed] = {
-    Flow[TimeSeriesData].splitWhen(tsd => interval.newInterval(tsd.timestamp)).to(intervalSink(interval))
+  def groupByInterval(interval: Interval, log: String => Unit): Sink[TimeSeriesData, NotUsed] = {
+    Flow[TimeSeriesData].splitWhen(tsd => interval.newInterval(tsd.timestamp)).to(intervalSink(interval, log))
   }
 
-  val SAVE_PARALLELISM = 5
-  def intervalSink(interval: Interval): Sink[TimeSeriesData, NotUsed] = {
+  def intervalSink(interval: Interval, log: String => Unit): Sink[TimeSeriesData, NotUsed] = {
       Flow[TimeSeriesData]
           .fold(Seq.empty[TimeSeriesData])(_ :+ _)
           .map[Option[AggregatedData]](ts =>
@@ -124,10 +124,10 @@ trait AggregationBranch {
           .to(Sink.ignore)
   }
 
-  def aggregateBranch(): Sink[TimeSeriesData, NotUsed] = {
-      val fifteen = groupByInterval(Interval.`15m`)
-      val thirty = groupByInterval(Interval.`30m`)
-      val sixty = groupByInterval(Interval.`1h`)
+  def aggregateBranch(log: String => Unit): Sink[TimeSeriesData, NotUsed] = {
+      val fifteen = groupByInterval(Interval.`15m`, log)
+      val thirty = groupByInterval(Interval.`30m`, log)
+      val sixty = groupByInterval(Interval.`1h`, log)
 
       groupByKey().to(Sink.combine(fifteen, thirty, sixty)(_ => Broadcast(3)))
   }
@@ -138,17 +138,18 @@ trait AggregationBranch {
 }
 
 object AppliedFlows extends TimeSeriesSource with ArchivalBranch with AggregationBranch {
-    def archiveAndAggregateGraph(forDate: DateTime, s3Gen: DateTime => S3BucketAndKey) = {
-        RunnableGraph.fromGraph(GraphDSL.create(cassandraSource(forDate)) { implicit builder => cass =>
+    def archiveAndAggregateGraph(forDate: DateTime, s3Gen: DateTime => S3BucketAndKey, log: String => Unit) = {
+        val sink = s3sink(s3Gen(forDate))
+        RunnableGraph.fromGraph(GraphDSL.create(cassandraSource(forDate), sink)(Keep.right) { implicit builder => (cass, snk) =>
             import GraphDSL.Implicits._
 
             val split = builder.add(Broadcast[TimeSeriesData](2))
-            val archiveBranch = builder.add(Flow[TimeSeriesData].map(convertToCsvRow).to(s3sink(s3Gen(forDate))))
-            val aggBranch = builder.add(Flow[TimeSeriesData].to(aggregateBranch()))
+            val convertToCsv = builder.add(Flow[TimeSeriesData].map(convertToCsvRow))
+            val aggSnk = builder.add(Flow[TimeSeriesData].to(aggregateBranch(log)))
 
             cass ~> split.in
-                    split.out(0) ~> archiveBranch
-                    split.out(1) ~> aggBranch
+                    split.out(0) ~> convertToCsv ~> snk
+                    split.out(1) ~> aggSnk
 
            ClosedShape
         })
