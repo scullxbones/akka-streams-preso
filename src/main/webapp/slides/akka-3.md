@@ -7,7 +7,7 @@
 - Reach for this when you need fan-in and fan-out shapes
   - But first: check out `Source.combine` and `Sink.combine`
 
-<a onclick="window.open('/resources/graphdslflow.png','','toolbar=no,location=no,status=no,menubar=no,width=640,height=400')">diagram</a>
+<a style="cursor: pointer;" onclick="window.open('/resources/graphdslflow.png','','toolbar=no,location=no,status=no,menubar=no,width=640,height=400')">diagram</a>
 
 ```scala
 def sample[Mat1,Mat2](source: Source[String, Mat1], tap: Sink[Int, Mat2]): Flow[String, String, Mat2] = {
