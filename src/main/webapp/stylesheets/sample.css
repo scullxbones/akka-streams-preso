@@ -8,6 +8,10 @@
 #sample {
   font-size: 1.5em;
   font-family: monospace; }
+  #sample li {
+    list-style-type: none; }
+    #sample li:before {
+      content: "> "; }
 
 #run {
   background-color: #37c0d0;

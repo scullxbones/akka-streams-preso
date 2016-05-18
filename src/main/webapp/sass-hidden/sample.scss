@@ -9,6 +9,12 @@
 #sample {
   font-size: 1.5em;
   font-family: monospace;
+  li {
+    list-style-type: none;
+    &:before {
+      content: "> ";
+    }
+  }
 }
 
 #run {

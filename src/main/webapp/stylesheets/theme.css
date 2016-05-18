@@ -47,7 +47,8 @@ body {
     .reveal .slides .row ul.col li {
       list-style-type: none;
       margin: 0 0 5px 0;
-      padding: 5px; }
+      padding: 5px;
+      font-size: 0.75em; }
 
 .reveal .slides .left {
   width: 400px;
