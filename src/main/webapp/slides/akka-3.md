@@ -10,27 +10,32 @@
 <a href="/resources/graphdslflow.png" target="blank">diagram</a>
 
 ```scala
-def sample(source: Source[String, NotUsed]): Flow[String, String, NotUsed] = {
-    Flow.fromGraph(GraphDSL.create(source) { implicit builder => src =>
+def sample[Mat1,Mat2](source: Source[String, Mat1], tap: Sink[Int, Mat2]): Flow[String, String, Mat2] = {
+    Flow.fromGraph(GraphDSL.create(source, tap)(Keep.right) { implicit builder => (src,snk) =>
         import GraphDSL.Implicits._
 
-        val zipWith = builder.add(UnzipWith[String, String, String](s => s.take(2) -> s.drop(2)))
-        val merge = builder.add(MergePreferred[String](2))
+        val bcast = builder.add(Broadcast[String](2))
+        val len = builder.add(Flow[String].map(_.length))
+        val merge = builder.add(Merge[String](2))
 
-        zipWith.out0    ~> merge.in(0)
-        zipWith.out1    ~> merge.in(1)
-        src.out         ~> merge.preferred
+        bcast.out(0)    ~> len          ~> snk.in
+        bcast.out(1)    ~> merge.in(0)
+        src.out         ~> merge.in(1)
 
-        FlowShape(zipWith.in, merge.out)
+        FlowShape(bcast.in, merge.out)
     })
 }
 
 val contained = "!!!" :: "@@@" :: Nil
 val feed = "ABC" :: "abc" :: "de" :: Nil
+val lengthPromise = Promise[Int]()
+val lengthCalc = Sink.fold[Int,Int](0)(_ + _)
 
 Source(feed)
-    .via(sample(Source(contained)))
-    .runWith(Sink.foreach(logToPage))
+    .viaMat(sample(Source(contained), lengthCalc))(Keep.right)
+    .mapMaterializedValue(lengthPromise.completeWith)
+    .toMat(Sink.foreach(logToPage))(Keep.right)
+    .run()
 ```
 
 <iframe class="sample" data-src="/samples/graph-dsl"></iframe>
