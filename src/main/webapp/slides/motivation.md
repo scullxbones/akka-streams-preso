@@ -2,7 +2,7 @@
 
 #### Some common use cases
 
-- data processing
+- data processing 
 - file transformations
 - ETL pipelines
 - messaging & eventing
