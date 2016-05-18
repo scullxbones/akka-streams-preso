@@ -15,6 +15,9 @@ body {
   padding: 20px !important;
   background: rgba(255, 255, 255, 0.1) !important; }
 
+.reveal .backgrounds > .slide-background:first-of-type {
+  background-color: rgba(0, 0, 0, 0.35); }
+
 .reveal .slides h1 {
   text-decoration: underline;
   margin-bottom: 10px; }

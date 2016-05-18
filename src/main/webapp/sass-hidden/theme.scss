@@ -47,6 +47,10 @@ body {
     background: rgba(255, 255, 255, 0.1) !important;
   }
 
+  .backgrounds > .slide-background:first-of-type {
+    background-color: rgba(0,0,0,.35);
+  }
+
   .slides h1 {
     text-decoration: underline;
     margin-bottom: 10px;
