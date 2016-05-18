@@ -1,14 +1,18 @@
 @import 'theme/template/mixins';
 @import 'theme/template/settings';
 
-$headingColor: #222;
-$mainColor: #222;
+$headingColor: #fff;
+$mainColor: #fff;
 $blockMargin: 10px;
-$heading1Size: 1.75em;
-$heading2Size: 1.5em;
-$heading3Size: 1.25em;
-$heading4Size: 1.15em;
+$heading1Size: 2.5em;
+$heading2Size: 2em;
+$heading3Size: 1.5em;
+$heading4Size: 1.4em;
 $heading5Size: 1.1em;
+
+body {
+  background-color: #000;
+}
 
 .reveal {
   .slides h1,
@@ -18,19 +22,53 @@ $heading5Size: 1.1em;
   .slides h5,
   .slides h6,
   .slides p {
-      text-shadow: 2px 2px #fff;
+      // text-shadow: 2px 2px #fff;
     }
   pre {
-    -webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+    box-shadow: none !important;
+    width: 95% !important;
+    margin-top: 30px !important;
+
+    code {
+      max-height: 350px;
+    }
+  }
+
+  blockquote {
+    margin-top: 40px !important;
+    padding: 20px !important;
+    background: rgba(255, 255, 255, 0.1) !important;
+  }
+
+  .slides h1 {
+    text-decoration: underline;
+    margin-bottom: 10px;
+  }
+
+  .slides h4 {
+    margin-bottom: 0px;
+  }
+
+  .slide-background {
+    background-color: rgba(0,0,0,.85);
+    &.intro {
+      background-color: rgba(0,0,0,.4);
+    }
+  }
+
+  .slides .intro {
+    h1 {
+      font-size: 6em;
+      line-height: 1.1;
+      margin-bottom: 10px;
+    }
+    h3 {
+      font-size: 2.5em;
+      margin-bottom: 50px;
+    }
   }
 
   .slides {
-    background: rgba(192,192,192,0.7);
-    border-width: 1px;
-    border-color: black;
-
     .row {
       padding: 10px;
       ul {
@@ -84,6 +122,14 @@ $heading5Size: 1.1em;
       clear: both;
     }
   }
+}
+
+.reveal ol, .reveal dl, .reveal ul {
+  margin-top: 1.5em !important;
+}
+
+.reveal ul ul, .reveal ul ol, .reveal ol ol, .reveal ol ul {
+  margin-top: 0 !important;
 }
 
 .transparent {
