@@ -54,6 +54,9 @@ body {
     &.intro {
       background-color: rgba(0,0,0,.35);
     }
+    &.stack {
+      background-color: rgba(0,0,0,0);
+    }
   }
 
   .slides .intro {

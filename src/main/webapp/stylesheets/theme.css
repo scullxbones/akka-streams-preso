@@ -24,6 +24,8 @@ body {
   background-color: rgba(0, 0, 0, 0.85); }
   .reveal .slide-background.intro {
     background-color: rgba(0, 0, 0, 0.35); }
+  .reveal .slide-background.stack {
+    background-color: transparent; }
 
 .reveal .slides .intro h1 {
   font-size: 6em;
