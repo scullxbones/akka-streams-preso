@@ -1,5 +1,7 @@
 body {
   background-color: #000; }
+  body .reveal section img {
+    background: white; }
 
 .reveal pre {
   box-shadow: none !important;

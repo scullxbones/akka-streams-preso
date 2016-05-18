@@ -12,6 +12,13 @@ $heading5Size: 1.1em;
 
 body {
   background-color: #000;
+  .reveal {
+    section {
+      img {
+        background: rgba(255, 255, 255, 1)
+      }
+    }
+  }
 }
 
 .reveal {
