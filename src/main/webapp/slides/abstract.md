@@ -1,6 +1,9 @@
 # What is this talk about?
 
-- Reactive streams, what are they?
+- Motivation
+  - Use cases
+
+- Reactive streams
 
 - Back pressure
   - What is it?

@@ -13,11 +13,11 @@ object GraphDslFlows extends TickTock {
             import GraphDSL.Implicits._
 
             val zipWith = builder.add(UnzipWith[String, String, String](s => s.take(2) -> s.drop(2)))
-            val merge = builder.add(MergePreferred[String](2))
+            val merge = builder.add(Merge[String](3))
 
             zipWith.out0    ~> merge.in(0)
             zipWith.out1    ~> merge.in(1)
-            src.out         ~> merge.preferred
+            src.out         ~> merge.in(2)
 
             FlowShape(zipWith.in, merge.out)
         })

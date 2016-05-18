@@ -3,6 +3,7 @@
 <ul>
     <li>SPI, not intended to be user-facing</li>
     <li>Provides interop among implementations</li>
+    <li>Akka Streams, MongoDB driver, Ratpack, Reactor, RxJava, Slick, Vert.x 3</li>
 </ul>
 
 <pre>
@@ -27,27 +28,27 @@ trait Subscription {
 <div class="row">
     <ul class="col">
         <h5>Connect flow</h5>
-        <li>Sub => Pub <code>subscribe</code></li>
-        <li>Pub => Sub <code>onSubscribe</code>
+        <li>Sub to Pub <code>subscribe</code></li>
+        <li>Pub to Sub <code>onSubscribe</code>
             <ul><li>Acknowledgement</li></ul>
         </li>
     </ul>
 
     <ul class="col">
       <h5>Data flow</h5>
-      <li>Sub => Pub <code>request</code> (via Subscription)
+      <li>Sub to Pub <code>request</code> (via Subscription)
         <ul><li>Upstream demand signaling</li></ul>
       </li>
-      <li>Pub => Sub `onNext`
+      <li>Pub to Sub `onNext`
         <ul><li>Downstream data flow</li></ul>
       </li>
     </ul>
 
     <ul class="col">
         <h5>Completion</h5>
-      <li>Pub => Sub <code>onComplete</code></li>
-      <li>Pub => Sub <code>onError</code></li>
-      <li>Sub => (via Subscription) => Pub <code>cancel</code></li>
+      <li>Pub to Sub <code>onComplete</code></li>
+      <li>Pub to Sub <code>onError</code></li>
+      <li>Sub to Pub (via Subscription)<code>cancel</code></li>
     </ul>
 </div>
 
