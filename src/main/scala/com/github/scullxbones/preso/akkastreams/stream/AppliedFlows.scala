@@ -120,7 +120,7 @@ trait AggregationBranch {
                   statistics = statistics
               )
           )
-          .mapAsyncUnordered(SAVE_PARALLELISM)(_.map(saveAggregateToCassandra).getOrElse(Future.successful(Done)))
+          .map(_.map(saveAggregateToCassandra).getOrElse(Future.successful(Done)))
           .to(Sink.ignore)
   }
 
@@ -138,12 +138,12 @@ trait AggregationBranch {
 }
 
 object AppliedFlows extends TimeSeriesSource with ArchivalBranch with AggregationBranch {
-    def archiveAndAggregateGraph(forDate: DateTime, s3info: S3BucketAndKey) = {
+    def archiveAndAggregateGraph(forDate: DateTime, s3Gen: DateTime => S3BucketAndKey) = {
         RunnableGraph.fromGraph(GraphDSL.create(cassandraSource(forDate)) { implicit builder => cass =>
             import GraphDSL.Implicits._
 
             val split = builder.add(Broadcast[TimeSeriesData](2))
-            val archiveBranch = builder.add(Flow[TimeSeriesData].map(convertToCsvRow).to(s3sink(s3info)))
+            val archiveBranch = builder.add(Flow[TimeSeriesData].map(convertToCsvRow).to(s3sink(s3Gen(forDate))))
             val aggBranch = builder.add(Flow[TimeSeriesData].to(aggregateBranch()))
 
             cass ~> split.in

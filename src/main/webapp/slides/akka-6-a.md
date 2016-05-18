@@ -1,22 +1,21 @@
 # Applied - An Approach
 
-- Data export process
-  - Open back pressured cursor to Cassandra for a day's worth of data
-  - Split flow to analytics and archive paths
-  - Archive path:
-    - Map data to CSV string format
-    - Write to S3 bucket, keyed by day
-  - Aggregate path:
-    - Broadcast to interval aggregators
-    - Group by 15m, 30m, 1hr intervals
-    - For each interval calculate mean, stddev, median
-  - Write aggregates back to Cassandra
-    - Fields
-      - Device identifier
-      - Device attribute
-      - Interval
-      - As of timestamp
-      - Mean
-      - Stddev
-      - Median
-
+- Open back pressured cursor to Cassandra for a day's worth of data
+- Split flow to analytics and archive paths
+- Archive path:
+  - Map data to CSV string format
+  - Write to S3 bucket, keyed by day
+- Aggregate path:
+  - Group by device id, device attribute
+  - Broadcast to interval aggregators
+  - Group by 15m, 30m, 1hr intervals
+  - For each interval calculate mean, stddev, median
+- Write aggregates back to Cassandra
+  - Fields
+    - Device identifier
+    - Device attribute
+    - Interval
+    - As of timestamp
+    - Mean
+    - Stddev
+    - Median
