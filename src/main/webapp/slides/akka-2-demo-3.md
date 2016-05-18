@@ -2,9 +2,17 @@
 
 ##### Map Async Failure
 
+<div class="left">
 ![mapasyncflow](/resources/mapasyncflow.png)
+</div>
 
-- Map async failures cause the stream to abort with a failure
+<div class="right">
+<ul>
+<li>Map async failures cause the stream to abort with a failure</li>
+</ul>
+</div>
+
+<div class="clear"/>
 
 ```scala
 def asyncApi(str: String): Future[String] = Future {

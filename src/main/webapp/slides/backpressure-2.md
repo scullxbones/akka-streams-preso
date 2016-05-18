@@ -6,6 +6,6 @@
 
 - Not every producer/consumer pair can be as well matched
 - Slow producer, fast consumer - not really needed
-  - "Push" based backpressure
+  - "Push" based flow
 - Fast producer, slow consumer - backpressure becomes a requirement
-  - "Pull" based backpressure
+  - "Pull" based flow

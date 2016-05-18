@@ -8,9 +8,9 @@
 
 <div class="right">
 <ul>
-<li>Supervision can cope with failure</li>
+<li>Similar to actors, use supervision to cope with failure</li>
 <li>Simple case, `Supervision.resumingDecider` resumes the stream after the failure</li>
-<li>Finer detail can be done with a custom `Supervision` approach</li>
+<li>Finer detail with a custom approach `PartialFunction[Throwable,Supervision.Directive]` ~ Stop,Resume,Restart</li>
 <li>Completing the stream (rather than failing) can be done with `recover`</li>
 </ul>
 </div>

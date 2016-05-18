@@ -5,6 +5,7 @@
 - Actor integration
   - No backpressure: `Source.actorRef`, `Sink.actorRef`
   - Backpressure: `Sink.actorRefWithAck`, `ActorPublisher`, and `ActorSubscriber`
+  - Remote actors are not allowed in streams due to inherent unreliability of remote calls
 - Nesting and flattening stages
 - Time windowing and time based `xyzWithin` stages
 - Rate management with `conflate`, `expand`, `batch` and `buffer`

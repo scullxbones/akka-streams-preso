@@ -5,4 +5,4 @@
 - Upstream communication of demand
 - Data flows while there is demand
 - Demand propagates across async boundaries
-  - e.g. TCP ACK/NACK
+  - e.g. TCP receive window flow control

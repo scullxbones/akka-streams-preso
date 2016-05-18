@@ -11,3 +11,4 @@
   - Non-Blocking
   - No overflow
   - Memory bounded
+    - Unbounded actor mailbox
