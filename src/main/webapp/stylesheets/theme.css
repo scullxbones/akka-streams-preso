@@ -6,7 +6,7 @@ body {
   width: 95% !important;
   margin-top: 30px !important; }
   .reveal pre code {
-    max-height: 350px; }
+    max-height: 350px !important; }
 
 .reveal blockquote {
   margin-top: 40px !important;
@@ -23,7 +23,7 @@ body {
 .reveal .slide-background {
   background-color: rgba(0, 0, 0, 0.85); }
   .reveal .slide-background.intro {
-    background-color: rgba(0, 0, 0, 0.4); }
+    background-color: rgba(0, 0, 0, 0.35); }
 
 .reveal .slides .intro h1 {
   font-size: 6em;
@@ -75,7 +75,8 @@ body {
   clear: both; }
 
 .reveal ol, .reveal dl, .reveal ul {
-  margin-top: 1.5em !important; }
+  margin-top: 1.4em !important;
+  max-width: 900px; }
 
 .reveal ul ul, .reveal ul ol, .reveal ol ol, .reveal ol ul {
   margin-top: 0 !important; }

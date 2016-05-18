@@ -30,7 +30,7 @@ body {
     margin-top: 30px !important;
 
     code {
-      max-height: 350px;
+      max-height: 350px !important;
     }
   }
 
@@ -52,7 +52,7 @@ body {
   .slide-background {
     background-color: rgba(0,0,0,.85);
     &.intro {
-      background-color: rgba(0,0,0,.4);
+      background-color: rgba(0,0,0,.35);
     }
   }
 
@@ -125,7 +125,8 @@ body {
 }
 
 .reveal ol, .reveal dl, .reveal ul {
-  margin-top: 1.5em !important;
+  margin-top: 1.4em !important;
+  max-width: 900px;
 }
 
 .reveal ul ul, .reveal ul ol, .reveal ol ol, .reveal ol ul {
