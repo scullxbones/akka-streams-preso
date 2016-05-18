@@ -1,7 +1,6 @@
 # What is this talk about?
 
-- Motivation
-  - Use cases
+- Use cases for akka streams
 
 - Reactive streams
 
@@ -16,6 +15,8 @@
   - Graph DSL
   - Custom stages
   - Auto-fusing and async boundaries
+
+- Applied Example
 
 - More to explore
 

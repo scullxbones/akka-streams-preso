@@ -5,6 +5,7 @@
 - Can be useful for statefulness
   - But first: check out `Source.unfold` and `Source.unfoldAsync`
 - Fairly low-level, should be a last resort
+- Example below hashes content
 
 ```scala
 val content = "abcdefghijklmnopqrstuvwxyz0123456789"

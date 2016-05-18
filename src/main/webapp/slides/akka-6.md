@@ -2,13 +2,33 @@
 
 ##### Applied
 
--
--
--
--
--
--
--
--
--
--
+- Assume time-series device data in Cassandra (communication satellites? Google Nests? weather stations?)
+  - Data expires after TTL
+  - Requirements:
+    - Aggregate by device and attribute for time intervals
+    - Archive for later exploratory analytics
+  - Fields
+    - Timestamp
+    - Device identifier
+    - Device attribute
+    - Attribute value
+
+- Data export process
+  - Open back pressured cursor to Cassandra for a day's worth of data
+  - Split flow to analytics and archive paths
+  - Archive path:
+    - Map data to CSV string format
+    - Write to S3 bucket, keyed by day
+  - Aggregate path:
+    - Broadcast to interval aggregators
+    - Group by 15m, 30m, 1hr intervals
+    - For each interval calculate mean, stddev, median
+  - Write aggregates back to Cassandra
+    - Fields
+      - Device identifier
+      - Device attribute
+      - Interval
+      - As of timestamp
+      - Mean
+      - Stddev
+      - Median

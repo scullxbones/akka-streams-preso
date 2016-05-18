@@ -3,6 +3,7 @@ package com.github.scullxbones.preso.akkastreams.stream
 import akka.stream.SourceShape
 import akka.stream.scaladsl._
 
+// Slow demos down
 trait TickTock {
     import concurrent.duration._
 

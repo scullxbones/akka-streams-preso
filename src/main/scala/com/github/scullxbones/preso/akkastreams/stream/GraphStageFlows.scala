@@ -26,7 +26,7 @@ object GraphStageFlows extends TickTock {
     def graphStage(content: String, fn: ByteString => Unit) = {
         tickTock(Source(splitPairs(content)))
             .via(Flow[String].map(ByteString.apply))
-            .viaMat(Flow.fromGraph(new MurmurHasher()))(Keep.right)
+            .viaMat(Flow.fromGraph(new Hasher()))(Keep.right)
             .toMat(Sink.foreach(fn))(Keep.left)
             .run()
     }
@@ -35,7 +35,7 @@ object GraphStageFlows extends TickTock {
 
     // Adapted from akka cookbook
     import akka.stream.stage._
-    class MurmurHasher extends GraphStageWithMaterializedValue[FlowShape[ByteString, ByteString], Future[Option[HashValue]]] {
+    class Hasher extends GraphStageWithMaterializedValue[FlowShape[ByteString, ByteString], Future[Option[HashValue]]] {
         val in = Inlet[ByteString]("Hasher.in")
         val out = Outlet[ByteString]("Hasher.out")
         override val shape = FlowShape.of(in, out)
