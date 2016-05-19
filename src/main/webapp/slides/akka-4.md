@@ -12,7 +12,7 @@ val content = "abcdefghijklmnopqrstuvwxyz0123456789"
 
 Source(splitPairs(content))
     .via(Flow[String].map(ByteString.apply))
-    .viaMat(Flow.fromGraph(new MurmurHasher()))(Keep.right)
+    .viaMat(Flow.fromGraph(new Hasher()))(Keep.right)
     .toMat(Sink.foreach(fn))(Keep.left)
     .run()
 ```
